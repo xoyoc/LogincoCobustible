@@ -7,3 +7,6 @@ class Equipo(models.Model):
     marca = models.TextField(max_length=100)
     year = models.IntegerField(default=2023)
     capacidad_tanque = models.IntegerField(default=10)
+
+    def __str__(self) -> str:
+        return f"Placa:{self.placa} Modelo:{self.modelo} Marca:{self.marca} Año:{self.year} Tanque:{self.capacidad_tanque}"
