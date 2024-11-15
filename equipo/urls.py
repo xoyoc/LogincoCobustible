@@ -16,10 +16,11 @@ Including another URLconf
 """
 from django.urls import path
 
-from equipo.views import my_view, my_view_detalle
+from equipo.views import my_view, my_view_detalle, TeamFormView
 
 
 urlpatterns = [
+    path('agregar/', TeamFormView.as_view(), name="add_team"),
     path('listado/', my_view),
     path('detalle/<int:id>', my_view_detalle),
     path('marca/<str:brand>', my_view_detalle),

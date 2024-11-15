@@ -1,6 +1,10 @@
+from django.urls import reverse_lazy
 from django.views.generic import TemplateView
+from django.views import generic
 from django.http import HttpResponse
 from django.shortcuts import render
+
+from equipo.forms import TeamForm
 
 
 # Create your views here.
@@ -25,6 +29,16 @@ class TeamListView(TemplateView):
         return {
             "team_list": team_list
         }
+
+class TeamFormView(generic.FormView):
+    template_name = "equipo/add_equipo.html"
+    form_class = TeamForm
+    success_url = reverse_lazy('add_team')
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+    
 
 def my_test_view(request):
     return HttpResponse("Prueba vista de equipo")

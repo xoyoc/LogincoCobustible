@@ -1,0 +1,7 @@
+Fomrulario de equipo
+
+<form action="{% url "add_team" %}" method='post'>
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit">Agregar</button>
+</form>
