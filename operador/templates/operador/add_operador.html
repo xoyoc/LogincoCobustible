@@ -1,0 +1,7 @@
+Fomrulario de operador
+
+<form action="{% url "add_operation" %}" method='post'>
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit">Agregar</button>
+</form>

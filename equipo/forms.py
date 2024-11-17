@@ -12,9 +12,9 @@ class TeamForm(forms.Form):
 
     def save(self):
         Equipo.objects.create(
-            placa=self.cleaned_data['placa'],
-            modelo=self.cleaned_data['modelo'],
-            marca=self.cleaned_data['marca'],
-            year=self.cleaned_data['year'],
-            capacidad_tanque=self.cleaned_data['capacidad_tanque'],
+            placa=self.cleaned_data["placa"],
+            modelo=self.cleaned_data["modelo"],
+            marca=self.cleaned_data["marca"],
+            year=self.cleaned_data["year"],
+            capacidad_tanque=self.cleaned_data["capacidad_tanque"],
         )
