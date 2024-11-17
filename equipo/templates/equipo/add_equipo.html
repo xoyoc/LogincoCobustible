@@ -1,7 +1,11 @@
-Fomrulario de equipo
+{% extends "base.html" %}
 
-<form action="{% url "add_team" %}" method='post'>
-    {% csrf_token %}
-    {{form.as_p}}
-    <button type="submit">Agregar</button>
-</form>
+{% block content %}
+    Fomrulario de equipo
+
+    <form action="{% url "add_team" %}" method='post'>
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit">Agregar</button>
+    </form>
+{% endblock content %}
