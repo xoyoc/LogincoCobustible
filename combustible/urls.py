@@ -17,7 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+from combustible.views import CombustibleView
+
 urlpatterns = [
+    path('',CombustibleView.as_view(), name='inicio'),
     path('admin/', admin.site.urls),
     path('equipos/', include('equipo.urls')),
     path('operadores/', include('operador.urls')),

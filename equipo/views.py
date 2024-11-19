@@ -5,30 +5,14 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 from equipo.forms import TeamForm
+from equipo.models import Equipo
 
 
 # Create your views here.
-def my_view(request):
-    team_list = [
-        {},
-        {}
-    ]
-    context ={
-        "team_list": team_list
-    }
-    return render(request, "equipo/team_list.html", context)
-
-class TeamListView(TemplateView):
-    template_name = "equipo/team_list.html"
-
-    def get_context_data(self):
-        team_list = [
-            {},
-            {}
-        ]
-        return {
-            "team_list": team_list
-        }
+class TeamListView(generic.ListView):
+    model = Equipo
+    template_name="equipo/list_equipo.html"
+    context_object_name = 'equipos'
 
 class TeamFormView(generic.FormView):
     template_name = "equipo/add_equipo.html"
