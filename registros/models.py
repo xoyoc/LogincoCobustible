@@ -8,7 +8,7 @@ from operador.models import Operador
 
 
 class Registro(models.Model):
-    fecha_hora = models.DateField(verbose_name="Fecha y hora")
+    fecha_hora = models.DateTimeField(auto_now_add=True, verbose_name="Fecha y hora")
     numero_tiket = models.TextField(max_length=20, verbose_name="Numero ticket")
     idEquipo = models.ForeignKey(Equipo, on_delete=models.DO_NOTHING)
     idOperador = models.ForeignKey(Operador, on_delete=models.DO_NOTHING)

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3 class="text-1xl font-bold underline my-2">LISTA DE CARGA DE COBUSTIBLE</h3>
+<div class="grid grid-cols-subgrid gap-4 lg:grid-cols-4 lg:gap-8">
+    {% for registro in registros %}
+        <div class="h-32 rounded-lg bg-gray-200">
+            <h5>{{ registro.fecha_hora | date }}</h5>
+            <p>{{ registro.idEquipo.placa }}</p>
+            <p>{{ registro.idOperador.nombre }}</p>
+            <h5>{{ registro.Litros}} Capacidad:{{ registro.idEquipo.capacidad_tanque }}</h5>
+            <p>{{ registro.kilometraje }}</p>
+        </div>
+    {%endfor%}
+</div>
+{% endblock content %}

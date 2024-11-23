@@ -2,9 +2,7 @@
 {% load tailwind_filters %}
 
 {% block content %}
-    Fomrulario de equipo
-
-    <form action="{% url "add_team" %}" method='post'>
+    <form action="{% url "add_register" %}" method='post'>
         {% csrf_token %}
         {{ form|crispy }}
         <button type="submit">Agregar</button>

@@ -16,9 +16,9 @@ Including another URLconf
 """
 from django.urls import path
 
-def my_view(request):
-    return "Prueba vista de registro de cobustible"
+from registros.views import RegisterFormView, RegisterListView
 
 urlpatterns = [
-    path("/listado", my_view)
+    path("listado/", RegisterListView.as_view(), name="list_register"),
+    path("agregar/", RegisterFormView.as_view(), name="add_register")
 ]
