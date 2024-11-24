@@ -1,6 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <div class="text-right">
+        <a 
+            class="inline-block rounded border border-indigo-600 bg-indigo-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
+            href="{% url "add_team" %}"
+        >
+            Alta de Vehiculo
+        </a>
+    </div>
     <h3 class="text-1xl font-bold underline my-1.5">LISTA DE EQUIPOS DE LOGINCO</h3>
     <div class="container">
         <div class="grid grid-cols-subgrid gap-12 lg:grid-cols-3 lg:gap-8">

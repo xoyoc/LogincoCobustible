@@ -6,6 +6,51 @@
     <form action="{% url "add_operation" %}" method='post'>
         {% csrf_token %}
         {{form.as_p}}
-        <button type="submit">Agregar</button>
+
+
+        <a
+            class="group relative inline-flex items-center overflow-hidden rounded bg-indigo-600 px-8 py-3 text-white focus:outline-none focus:ring active:bg-indigo-500"
+        >
+        <span class="absolute -start-full transition-all group-hover:start-4">
+            <svg
+            class="size-5 rtl:rotate-180"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            >
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M17 8l4 4m0 0l-4 4m4-4H3"
+            />
+            </svg>
+        </span>
+            <button class="text-sm font-medium transition-all group-hover:ms-4" type="submit">Agregar</button>
+        </a>
+        <a
+        class="group relative inline-flex items-center overflow-hidden rounded bg-indigo-600 px-8 py-3 text-white focus:outline-none focus:ring active:bg-indigo-500"
+        href="{% url "list_operation" %}"
+        >
+        <span class="absolute -end-full transition-all group-hover:end-4">
+            <svg
+            class="size-5 rtl:rotate-180"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            >
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M17 8l4 4m0 0l-4 4m4-4H3"
+            />
+            </svg>
+        </span>
+
+        <span class="text-sm font-medium transition-all group-hover:me-4"> Cancelar </span>
+        </a>
     </form>
 {% endblock content %}
