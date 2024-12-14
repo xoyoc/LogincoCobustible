@@ -83,14 +83,7 @@ WSGI_APPLICATION = 'combustible.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env.str('DJANGO_NAME'),
-        'HOST': env.str('DJANGO_HOST'),
-        'PORT':'25060',
-        'USER': env.str('DJANGO_USER'),
-        'PASSWORD': env.str('DJANGO_PASSWORD'),
-    }
+    'default':env.db('DJANGO_DB_URL')
 }
 
 
