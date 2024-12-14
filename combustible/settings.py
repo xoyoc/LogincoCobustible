@@ -12,9 +12,12 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 import os
 from pathlib import Path
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+env = environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
 
 # Quick-start development settings - unsuitable for production
@@ -81,8 +84,12 @@ WSGI_APPLICATION = 'combustible.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env.str('DJANGO_NAME'),
+        'HOST': env.str('DJANGO_HOST'),
+        'PORT':'25060',
+        'USER': env.str('DJANGO_USER'),
+        'PASSWORD': env.str('DJANGO_PASSWORD'),
     }
 }
 
