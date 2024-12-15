@@ -27,7 +27,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 SECRET_KEY = 'django-insecure-prsxg)&)9k86zo18=_doky&-ctw7vkb(xfs1cipgd7yjxoxzza'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['squid-app-5j4xm.ondigitalocean.app','127.0.0.1']
 
