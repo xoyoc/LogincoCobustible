@@ -134,6 +134,6 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 
 CRISPY_TEMPLATE_PACK = "tailwind"
 
-CSRF_TRUSTED_ORIGINS = ['squid-app-5j4xm.ondigitalocean.app','127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://squid-app-5j4xm.ondigitalocean.app','https://127.0.0.1']
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
