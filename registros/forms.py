@@ -1,6 +1,7 @@
 from django import forms
 
 from registros.models import Registro
+from combustible.sendmail import sendMail
 
 
 class RegisterForm(forms.ModelForm):
@@ -27,3 +28,7 @@ class RegisterForm(forms.ModelForm):
             kilometraje =self.cleaned_data["kilometraje"],
             photo_tiket =self.cleaned_data["photo_tiket"],
         )
+        email=self.cleaned_data["idOperador"].email
+        titulo="Registro de ticket"
+        contenido = f"Numero de ticket: {self.cleaned_data["numero_tiket"]} Cantidad:{self.cleaned_data["Litros"]}"
+        sendMail(email, titulo,contenido)
