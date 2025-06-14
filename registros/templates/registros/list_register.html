@@ -94,7 +94,7 @@
                     
                     <div class="text-right">
                         <div class="text-2xl font-bold text-blue-600 mb-1">
-                            ${{ registro.Litros|mul:registro.costolitro|floatformat:2 }}
+                            {% comment %} ${{ registro.Litros|multiply:registro.costolitro|floatformat:2 }} {% endcomment %}
                         </div>
                         <div class="text-sm text-gray-500">
                             ${{ registro.costolitro }}/L
