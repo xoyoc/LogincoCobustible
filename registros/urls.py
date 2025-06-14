@@ -19,6 +19,9 @@ from django.urls import path
 from registros.views import RegisterFormView, RegisterListView
 
 urlpatterns = [
-    path("listado/", RegisterListView.as_view(), name="list_register"),
-    path("agregar/", RegisterFormView.as_view(), name="add_register")
+    path('', RegisterListView.as_view(), name='registro_list'),
+    path('nuevo/', RegisterFormView.as_view(), name='registro_create'),
+    path('<int:pk>/', RegisterFormView.as_view(), name='registro_detail'),
+    path('<int:pk>/editar/', RegisterFormView.as_view(), name='registro_update'),
+    path('<int:pk>/eliminar/', RegisterFormView.as_view(), name='registro_delete'),
 ]

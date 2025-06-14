@@ -20,8 +20,9 @@ from equipo.views import TeamListView, my_view_detalle, TeamFormView
 
 
 urlpatterns = [
-    path('agregar/', TeamFormView.as_view(), name="add_team"),
-    path('listado/', TeamListView.as_view(), name="list_team"),
-    path('detalle/<int:id>', my_view_detalle),
-    path('marca/<str:brand>', my_view_detalle),
+    path('', TeamListView.as_view(), name='equipo_list'),
+    path('nuevo/', TeamFormView.as_view(), name='equipo_create'),
+    path('<int:pk>/', my_view_detalle, name='equipo_detail'),
+    path('<int:pk>/editar/', my_view_detalle, name='equipo_update'),
+    path('<int:pk>/eliminar/', my_view_detalle, name='equipo_delete'),
 ]
