@@ -20,15 +20,15 @@ class RegisterForm(forms.ModelForm):
 
     def save(self):
         Registro.objects.create(
-            numero_tiket =self.cleaned_data["numero_tiket"],
-            idEquipo =self.cleaned_data["idEquipo"],
-            idOperador =self.cleaned_data["idOperador"],
-            Litros =self.cleaned_data["Litros"],
-            costolitro =self.cleaned_data["costolitro"],
-            kilometraje =self.cleaned_data["kilometraje"],
-            photo_tiket =self.cleaned_data["photo_tiket"],
+            numero_tiket = self.cleaned_data["numero_tiket"],
+            idEquipo = self.cleaned_data["idEquipo"],
+            idOperador = self.cleaned_data["idOperador"],
+            Litros = self.cleaned_data["Litros"],
+            costolitro = self.cleaned_data["costolitro"],
+            kilometraje = self.cleaned_data["kilometraje"],
+            photo_tiket = self.cleaned_data["photo_tiket"],
         )
         email=self.cleaned_data["idOperador"].email
         titulo="Registro de ticket"
         contenido = f"Numero de ticket: {self.cleaned_data["numero_tiket"]} Cantidad:{self.cleaned_data["Litros"]}"
-        sendMail(email, titulo,contenido)
+        sendMail(email, titulo, contenido)

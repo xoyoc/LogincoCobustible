@@ -58,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'combustible.urls'
@@ -222,6 +223,9 @@ else:
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
     print("📁 Usando almacenamiento local para archivos")
 
+FILE_UPLOAD_HANDLERS = [
+    'django.core.files.uploadhandler.TemporaryFileUploadHandler',
+]
 # === CONFIGURACIÓN PARA REPORTES ===
 # Directorio específico para archivos temporales de reportes
 REPORTES_TEMP_DIR = 'reportes/temp'

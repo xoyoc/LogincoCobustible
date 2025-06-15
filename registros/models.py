@@ -1,7 +1,7 @@
 from django.db import models
 import logging
 
-from combustible.storage_backends import upload_ticket_photo, optimize_image_for_storage
+from combustible.storage_backends import MediaStorage, upload_ticket_photo, optimize_image_for_storage
 
 from equipo.models import Equipo
 from operador.models import Operador
@@ -20,6 +20,7 @@ class Registro(models.Model):
     costolitro = models.DecimalField(max_digits=4,decimal_places=2, verbose_name="Costo por litro")
     kilometraje = models.IntegerField(default=0, verbose_name="Kilometraje de Vehiculo")
     photo_tiket = models.ImageField(
+        storage=MediaStorage(),
         upload_to=upload_ticket_photo,  # Función personalizada para generar rutas
         null=True,
         blank=True,
@@ -32,19 +33,19 @@ class Registro(models.Model):
     
     def save(self, *args, **kwargs):
         # Optimizar imagen del ticket antes de guardar
-        if self.photo_tiket:
-            try:
-                # Optimización más agresiva para tickets (archivos más pequeños)
-                optimized = optimize_image_for_storage(
-                    self.photo_tiket, 
-                    max_size=(1280, 960),  # Resolución más pequeña para tickets
-                    quality=75  # Calidad un poco menor
-                )
-                if optimized != self.photo_tiket:
-                    self.photo_tiket = optimized
-                    logger.info(f"🎫 Imagen del ticket {self.numero_tiket} optimizada")
-            except Exception as e:
-                logger.error(f"❌ Error optimizando imagen del ticket: {e}")
+        # if self.photo_tiket:
+        #     try:
+        #         # Optimización más agresiva para tickets (archivos más pequeños)
+        #         optimized = optimize_image_for_storage(
+        #             self.photo_tiket, 
+        #             max_size=(1280, 960),  # Resolución más pequeña para tickets
+        #             quality=75  # Calidad un poco menor
+        #         )
+        #         if optimized != self.photo_tiket:
+        #             self.photo_tiket = optimized
+        #             logger.info(f"🎫 Imagen del ticket {self.numero_tiket} optimizada")
+        #     except Exception as e:
+        #         logger.error(f"❌ Error optimizando imagen del ticket: {e}")
         
         super().save(*args, **kwargs)
         logger.info(f"💾 Registro guardado: {self.numero_tiket}")

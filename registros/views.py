@@ -12,11 +12,21 @@ class RegisterListView(generic.ListView):
     template_name="registros/list_register.html"
     context_object_name = 'registros'
 
-class RegisterFormView(generic.FormView):
+class RegisterFormView(generic.CreateView):
+    model = Registro
+    fields = [
+            'numero_tiket',
+            'idEquipo', 
+            'idOperador',
+            'Litros',
+            'Litros',
+            'costolitro',
+            'kilometraje',
+            'photo_tiket'
+            ]
     template_name="registros/add_register.html"
-    form_class = RegisterForm
-    success_url = reverse_lazy('add_register')
+    success_url = reverse_lazy('registro_list')
 
-    def form_valid(self, form):
+"""     def form_valid(self, form):
         form.save()
-        return super().form_valid(form)
+        return super().form_valid(form) """
