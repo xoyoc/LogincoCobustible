@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 import os
 from pathlib import Path
+from decouple import config
 import tempfile
 import environ
 
@@ -162,3 +163,66 @@ REPORTES_EMAIL_DESTINATARIOS = [
     'f.suarez@loginco.com.mx',
     'xoyoc_l2@hotmail.com',
 ]
+
+# === CONFIGURACIÓN DE DIGITALOCEAN SPACES ===
+# Configuración base
+AWS_ACCESS_KEY_ID = config('DO_SPACES_ACCESS_KEY')
+AWS_SECRET_ACCESS_KEY = config('DO_SPACES_SECRET_KEY')
+AWS_STORAGE_BUCKET_NAME = config('DO_SPACES_BUCKET_NAME')
+AWS_S3_ENDPOINT_URL = config('DO_SPACES_ENDPOINT_URL')  # ej: https://nyc3.digitaloceanspaces.com
+AWS_S3_REGION_NAME = config('DO_SPACES_REGION', default='nyc3')
+
+# Configuración adicional
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',  # Cache por 24 horas
+}
+
+# Configuración de permisos
+AWS_DEFAULT_ACL = 'public-read'
+AWS_S3_FILE_OVERWRITE = False
+AWS_QUERYSTRING_AUTH = False
+
+# Configuración de URLs personalizadas (opcional)
+AWS_S3_CUSTOM_DOMAIN = config('DO_SPACES_CDN_ENDPOINT', default=None)  # CDN opcional
+if AWS_S3_CUSTOM_DOMAIN:
+    AWS_S3_URL_PROTOCOL = 'https:'
+
+# === CONFIGURACIÓN DE ARCHIVOS ESTÁTICOS ===
+# Backend de almacenamiento para archivos estáticos
+STATICFILES_STORAGE = 'storages.backends.s3boto3.StaticS3Boto3Storage'
+
+# Configuración específica para static files
+AWS_STATIC_LOCATION = 'static'
+STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN or AWS_STORAGE_BUCKET_NAME}.{AWS_S3_ENDPOINT_URL.replace("https://", "")}/{AWS_STATIC_LOCATION}/'
+
+# === CONFIGURACIÓN DE ARCHIVOS MEDIA ===
+# Backend de almacenamiento para archivos media (fotos de tickets)
+DEFAULT_FILE_STORAGE = 'combustible.storage_backends.MediaStorage'  # Clase personalizada
+
+# Configuración específica para media files
+AWS_MEDIA_LOCATION = 'media'
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN or AWS_STORAGE_BUCKET_NAME}.{AWS_S3_ENDPOINT_URL.replace("https://", "")}/{AWS_MEDIA_LOCATION}/'
+
+# === CONFIGURACIÓN DE SEGURIDAD ===
+# Headers de seguridad
+AWS_S3_OBJECT_PARAMETERS.update({
+    'ContentDisposition': 'inline',
+    'ContentLanguage': 'es',
+})
+
+# === CONFIGURACIÓN CONDICIONAL (DESARROLLO VS PRODUCCIÓN) ===
+if config('USE_SPACES', default=False, cast=bool):
+    # En producción usar Spaces
+    print("📦 Usando DigitalOcean Spaces para archivos")
+else:
+    # En desarrollo usar almacenamiento local
+    STATIC_URL = '/static/'
+    MEDIA_URL = '/media/'
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+    print("📁 Usando almacenamiento local para archivos")
+
+# === CONFIGURACIÓN PARA REPORTES ===
+# Directorio específico para archivos temporales de reportes
+REPORTES_TEMP_DIR = 'reportes/temp'
+REPORTES_STORAGE_LOCATION = 'reportes'
