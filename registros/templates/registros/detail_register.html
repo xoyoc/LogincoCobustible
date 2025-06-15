@@ -75,7 +75,7 @@
                     <h3 class="text-sm font-medium text-gray-500 mb-1">Total Pagado</h3>
                     <p class="text-4xl font-bold text-green-600 flex items-center">
                         <i class="fas fa-dollar-sign mr-2 text-2xl"></i>
-                        {{ registro.Litros|mul:registro.costolitro|floatformat:2 }}
+                        {% comment %} {{ registro.Litros|mul:registro.costolitro|floatformat:2 }} {% endcomment %}
                     </p>
                 </div>
                 <div>
@@ -202,7 +202,7 @@
                     <div class="text-sm text-gray-500">Por Litro</div>
                 </div>
                 <div>
-                    <div class="text-3xl font-bold text-green-600">${{ registro.Litros|mul:registro.costolitro|floatformat:2 }}</div>
+                    {% comment %} <div class="text-3xl font-bold text-green-600">${{ registro.Litros|mul:registro.costolitro|floatformat:2 }}</div> {% endcomment %}
                     <div class="text-sm text-gray-500">Total</div>
                 </div>
             </div>
@@ -319,7 +319,7 @@ if (navigator.share) {
     shareButton.onclick = function() {
         navigator.share({
             title: 'Ticket #{{ registro.numero_tiket }}',
-            text: 'Registro de combustible - {{ registro.Litros }}L por ${{ registro.Litros|mul:registro.costolitro|floatformat:2 }}',
+            text: 'Registro de combustible - {{ registro.Litros }}L por {% comment %}${{ registro.Litros|mul:registro.costolitro|floatformat:2 }}{% endcomment %}',
             url: window.location.href
         });
     };

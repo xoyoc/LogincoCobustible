@@ -1,7 +1,7 @@
 from django.db import models
 import logging
 
-from combustible.storage_backends import MediaStorage, upload_ticket_photo, optimize_image_for_storage
+from combustible.storage_backends import MediaStorage, ReportesStorage, upload_ticket_photo, optimize_image_for_storage
 
 from equipo.models import Equipo
 from operador.models import Operador
@@ -106,6 +106,7 @@ class ReporteGenerado(models.Model):
     
     # Archivo Excel guardado en Spaces
     archivo_excel = models.FileField(
+        storage=ReportesStorage(),
         upload_to='reportes/excel/',
         null=True,
         blank=True,

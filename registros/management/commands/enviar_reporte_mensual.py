@@ -15,8 +15,8 @@ from openpyxl.utils import get_column_letter
 from io import BytesIO
 import logging
 
-from tu_app.models import Registro, Equipo, Operador, ReporteGenerado
-from tu_app.storage_backends import ReportesStorage, get_file_url
+from registros.models import Registro, Equipo, Operador, ReporteGenerado
+from combustible.storage_backends import ReportesStorage, get_file_url
 
 logger = logging.getLogger(__name__)
 
@@ -121,7 +121,7 @@ class Command(BaseCommand):
                 operadores_equipo = list(set([reg.idOperador.nombre for reg in registros_equipo]))
                 
                 # Incluir información de la foto del equipo desde Spaces
-                foto_url = get_file_url(equipo.foto_equipo) if equipo.foto_equipo else None
+                #foto_url = get_file_url(equipo.foto_equipo) if equipo.foto_equipo else None
                 
                 equipos_stats[equipo.placa] = {
                     'equipo': equipo,
@@ -131,7 +131,7 @@ class Command(BaseCommand):
                     'operadores': operadores_equipo,
                     'ultimo_registro': ultimo_registro,
                     'promedio_litros': litros_equipo / registros_equipo.count() if registros_equipo.count() > 0 else 0,
-                    'foto_url': foto_url,
+                    #'foto_url': foto_url,
                     'eficiencia': self.calcular_eficiencia_equipo(registros_equipo),
                 }
 
@@ -150,7 +150,7 @@ class Command(BaseCommand):
                 equipos_usados = list(set([reg.idEquipo.placa for reg in registros_operador]))
                 
                 # Incluir foto del operador
-                foto_url = get_file_url(operador.foto_operador) if operador.foto_operador else None
+                #foto_url = get_file_url(operador.foto_operador) if operador.foto_operador else None
                 
                 operadores_stats[operador.nombre] = {
                     'operador': operador,
@@ -159,7 +159,7 @@ class Command(BaseCommand):
                     'num_registros': registros_operador.count(),
                     'equipos_usados': equipos_usados,
                     'promedio_litros': litros_operador / registros_operador.count() if registros_operador.count() > 0 else 0,
-                    'foto_url': foto_url,
+                    #'foto_url': foto_url,
                 }
 
         # Top rankings
@@ -394,8 +394,8 @@ class Command(BaseCommand):
             return [email_especifico]
         else:
             return getattr(settings, 'REPORTES_EMAIL_DESTINATARIOS', [
-                'admin@empresa.com',
-                'gerencia@empresa.com'
+                'zuly.becerra@loginco.com.mx',
+                'xoyoc_l2@hotmail.com',
             ])
 
     def enviar_correo(self, datos, excel_buffer, filename, año, mes, email_especifico=None, reporte_obj=None, include_photos=False):
