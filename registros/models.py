@@ -181,7 +181,7 @@ class WhatsAppContact(models.Model):
     
     # Relacionar con usuarios del sistema (opcional)
     user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True)
-    operador = models.OneToOneField('Operador', on_delete=models.SET_NULL, null=True, blank=True)
+    operador = models.OneToOneField(Operador, on_delete=models.SET_NULL, null=True, blank=True)
     
     class Meta:
         verbose_name = "Contacto WhatsApp"
