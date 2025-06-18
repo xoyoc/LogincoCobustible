@@ -1,10 +1,13 @@
 from django.db import models
+from django.contrib.auth.models import User
 import logging
+import json
 
 from combustible.storage_backends import MediaStorage, ReportesStorage, upload_ticket_photo, optimize_image_for_storage
 
 from equipo.models import Equipo
 from operador.models import Operador
+
 
 logger = logging.getLogger(__name__)
 
@@ -150,3 +153,115 @@ class ReporteGenerado(models.Model):
         if destinatarios_list:
             self.destinatarios = destinatarios_list
         self.save(update_fields=['enviado_por_email', 'fecha_envio', 'destinatarios'])
+
+class WhatsAppContact(models.Model):
+    """Modelo para contactos de WhatsApp"""
+    
+    ROLES = [
+        ('manager', 'Gerente'),
+        ('supervisor', 'Supervisor'),
+        ('operator', 'Operador'),
+        ('admin', 'Administrador'),
+    ]
+    
+    name = models.CharField(max_length=100, verbose_name="Nombre")
+    phone_number = models.CharField(max_length=20, unique=True, verbose_name="Número de WhatsApp")
+    role = models.CharField(max_length=20, choices=ROLES, verbose_name="Rol")
+    active = models.BooleanField(default=True, verbose_name="Activo")
+    
+    # Preferencias de notificaciones
+    receive_monthly_reports = models.BooleanField(default=True, verbose_name="Recibir reportes mensuales")
+    receive_alerts = models.BooleanField(default=True, verbose_name="Recibir alertas")
+    receive_summaries = models.BooleanField(default=True, verbose_name="Recibir resúmenes")
+    
+    # Información adicional
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    last_message_sent = models.DateTimeField(null=True, blank=True)
+    
+    # Relacionar con usuarios del sistema (opcional)
+    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True)
+    operador = models.OneToOneField('Operador', on_delete=models.SET_NULL, null=True, blank=True)
+    
+    class Meta:
+        verbose_name = "Contacto WhatsApp"
+        verbose_name_plural = "Contactos WhatsApp"
+        ordering = ['role', 'name']
+    
+    def __str__(self):
+        return f"{self.name} ({self.get_role_display()}) - {self.phone_number}"
+    
+    @property
+    def clean_phone_number(self):
+        """Devuelve el número limpio para WhatsApp API"""
+        from whatsaap_service import WhatsAppBusinessService
+        service = WhatsAppBusinessService()
+        return service._clean_phone_number(self.phone_number)
+
+class WhatsAppMessage(models.Model):
+    """Modelo para tracking de mensajes enviados"""
+    
+    MESSAGE_TYPES = [
+        ('text', 'Texto'),
+        ('document', 'Documento'),
+        ('image', 'Imagen'),
+        ('template', 'Plantilla'),
+        ('interactive', 'Interactivo'),
+    ]
+    
+    STATUS_CHOICES = [
+        ('sent', 'Enviado'),
+        ('delivered', 'Entregado'),
+        ('read', 'Leído'),
+        ('failed', 'Fallido'),
+        ('pending', 'Pendiente'),
+    ]
+    
+    contact = models.ForeignKey(WhatsAppContact, on_delete=models.CASCADE, verbose_name="Contacto")
+    message_type = models.CharField(max_length=20, choices=MESSAGE_TYPES, verbose_name="Tipo de mensaje")
+    content = models.TextField(verbose_name="Contenido del mensaje")
+    
+    # IDs de WhatsApp
+    whatsapp_message_id = models.CharField(max_length=100, null=True, blank=True, verbose_name="ID de mensaje WhatsApp")
+    
+    # Estado del mensaje
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending', verbose_name="Estado")
+    
+    # Metadatos
+    sent_at = models.DateTimeField(auto_now_add=True)
+    delivered_at = models.DateTimeField(null=True, blank=True)
+    read_at = models.DateTimeField(null=True, blank=True)
+    
+    # Información adicional
+    file_url = models.URLField(null=True, blank=True, verbose_name="URL del archivo adjunto")
+    template_name = models.CharField(max_length=100, null=True, blank=True, verbose_name="Nombre de plantilla")
+    error_message = models.TextField(null=True, blank=True, verbose_name="Mensaje de error")
+    
+    # Relación con reportes
+    reporte = models.ForeignKey('ReporteGenerado', on_delete=models.SET_NULL, null=True, blank=True)
+    
+    class Meta:
+        verbose_name = "Mensaje WhatsApp"
+        verbose_name_plural = "Mensajes WhatsApp"
+        ordering = ['-sent_at']
+    
+    def __str__(self):
+        return f"{self.contact.name} - {self.get_message_type_display()} ({self.sent_at.strftime('%d/%m/%Y %H:%M')})"
+
+class WhatsAppWebhookLog(models.Model):
+    """Log de webhooks recibidos de WhatsApp"""
+    
+    webhook_data = models.JSONField(verbose_name="Datos del webhook")
+    processed = models.BooleanField(default=False, verbose_name="Procesado")
+    processed_at = models.DateTimeField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    # Información extraída
+    from_number = models.CharField(max_length=20, null=True, blank=True)
+    message_id = models.CharField(max_length=100, null=True, blank=True)
+    message_status = models.CharField(max_length=20, null=True, blank=True)
+    
+    class Meta:
+        verbose_name = "Log de Webhook WhatsApp"
+        verbose_name_plural = "Logs de Webhooks WhatsApp"
+        ordering = ['-created_at']

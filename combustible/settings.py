@@ -29,7 +29,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 SECRET_KEY = env.str('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['squid-app-5j4xm.ondigitalocean.app','127.0.0.1']
 
@@ -230,3 +230,33 @@ FILE_UPLOAD_HANDLERS = [
 # Directorio específico para archivos temporales de reportes
 REPORTES_TEMP_DIR = 'reportes/temp'
 REPORTES_STORAGE_LOCATION = 'reportes'
+
+# === CONFIGURACIÓN ADICIONAL PARA SETTINGS.PY ===
+"""
+# Agregar a settings.py para configuración completa:
+
+# WhatsApp Business API Configuration
+WHATSAPP_PHONE_NUMBER_ID = config('WHATSAPP_PHONE_NUMBER_ID', default='')
+WHATSAPP_ACCESS_TOKEN = config('WHATSAPP_ACCESS_TOKEN', default='')
+WHATSAPP_VERIFY_TOKEN = config('WHATSAPP_VERIFY_TOKEN', default='whatsapp_webhook_verify')
+
+# Configuración de webhook
+WHATSAPP_WEBHOOK_URL = config('WHATSAPP_WEBHOOK_URL', default='/webhook/whatsapp/')
+
+# Configuración de plantillas
+WHATSAPP_TEMPLATES = {
+    'monthly_report': 'monthly_report_notification',
+    'inactive_alert': 'inactive_operators_alert',
+}
+
+# Límites de envío
+WHATSAPP_DAILY_LIMIT = 1000  # Mensajes por día
+WHATSAPP_RATE_LIMIT = 20     # Mensajes por minuto
+
+# Logging específico para WhatsApp
+LOGGING['loggers']['whatsapp'] = {
+    'handlers': ['file', 'console'],
+    'level': 'INFO',
+    'propagate': True,
+}
+"""

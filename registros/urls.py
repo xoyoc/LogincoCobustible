@@ -18,10 +18,12 @@ from django.urls import path
 
 from registros import views
 
+
 urlpatterns = [
     path('', views.RegisterListView.as_view(), name='registro_list'),
     path('nuevo/', views.RegisterFormView.as_view(), name='registro_create'),
     path('<int:pk>/', views.RegisterDetailView.as_view(), name='registro_detail'),
     path('<int:pk>/editar/', views.RegisterFormView.as_view(), name='registro_update'),
     path('<int:pk>/eliminar/', views.RegisterDeleteView.as_view(), name='registro_delete'),
+    path('webhook/whatsapp/', views.WhatsAppWebhookView.as_view(), name='whatsapp_webhook'),
 ]
