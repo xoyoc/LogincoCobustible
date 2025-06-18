@@ -364,8 +364,9 @@ class Command(BaseCommand):
             return [email_especifico]
         
         return getattr(settings, 'REPORTES_EMAIL_DESTINATARIOS', [
-            'admin@empresa.com',
-            'gerencia@empresa.com'
+            'xoyoc_l2@hotmail.com',
+            'zuly.becerra@loginco.com.mx',
+            'f.suarez@loginco.com.mx'
         ])
 
     def enviar_correo(self, datos, excel_buffer, filename, año, mes, email_especifico=None, reporte_obj=None):
@@ -412,7 +413,7 @@ class Command(BaseCommand):
         self.stdout.write("-" * 50)
         
         try:
-            from .whatsapp_service import WhatsAppBusinessService
+            from whatsaap_service import WhatsAppBusinessService
             service = WhatsAppBusinessService()
             
             # Verificar configuración

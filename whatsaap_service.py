@@ -15,7 +15,7 @@ class WhatsAppBusinessService:
     """Servicio para enviar mensajes y archivos por WhatsApp Business API"""
     
     def __init__(self):
-        self.base_url = "https://graph.facebook.com/v18.0"
+        self.base_url = "https://graph.facebook.com/v23.0"
         self.phone_number_id = getattr(settings, 'WHATSAPP_PHONE_NUMBER_ID', None)
         self.access_token = getattr(settings, 'WHATSAPP_ACCESS_TOKEN', None)
         self.verify_token = getattr(settings, 'WHATSAPP_VERIFY_TOKEN', None)

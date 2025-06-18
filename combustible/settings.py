@@ -15,6 +15,7 @@ from pathlib import Path
 from decouple import config
 import tempfile
 import environ
+import logging
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -231,10 +232,6 @@ FILE_UPLOAD_HANDLERS = [
 REPORTES_TEMP_DIR = 'reportes/temp'
 REPORTES_STORAGE_LOCATION = 'reportes'
 
-# === CONFIGURACIÓN ADICIONAL PARA SETTINGS.PY ===
-"""
-# Agregar a settings.py para configuración completa:
-
 # WhatsApp Business API Configuration
 WHATSAPP_PHONE_NUMBER_ID = config('WHATSAPP_PHONE_NUMBER_ID', default='')
 WHATSAPP_ACCESS_TOKEN = config('WHATSAPP_ACCESS_TOKEN', default='')
@@ -253,10 +250,10 @@ WHATSAPP_TEMPLATES = {
 WHATSAPP_DAILY_LIMIT = 1000  # Mensajes por día
 WHATSAPP_RATE_LIMIT = 20     # Mensajes por minuto
 
-# Logging específico para WhatsApp
-LOGGING['loggers']['whatsapp'] = {
-    'handlers': ['file', 'console'],
-    'level': 'INFO',
-    'propagate': True,
-}
-"""
+# Logging para WhatsApp
+if 'LOGGING' in locals():
+    LOGGING['loggers']['whatsapp'] = {
+        'handlers': ['file', 'console'],
+        'level': 'INFO',
+        'propagate': True,
+    }
