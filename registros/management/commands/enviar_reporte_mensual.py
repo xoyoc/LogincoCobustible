@@ -16,9 +16,9 @@ from openpyxl.utils import get_column_letter
 from io import BytesIO
 import logging
 
-from tu_app.models import Registro, Equipo, Operador, ReporteGenerado, WhatsAppContact, WhatsAppMessage
-from tu_app.storage_backends import ReportesStorage, get_file_url
-from tu_app.whatsapp_service import WhatsAppReportService
+from registros.models import Registro, Equipo, Operador, ReporteGenerado, WhatsAppContact, WhatsAppMessage
+from combustible.storage_backends import ReportesStorage, get_file_url
+from whatsaap_service import WhatsAppReportService
 
 logger = logging.getLogger(__name__)
 
@@ -498,8 +498,8 @@ class Command(BaseCommand):
 
 # management/commands/manage_whatsapp_contacts.py
 from django.core.management.base import BaseCommand
-from tu_app.models import WhatsAppContact, Operador
-from tu_app.whatsapp_service import WhatsAppBusinessService
+from registros.models import WhatsAppContact, Operador
+from whatsaap_service import WhatsAppBusinessService
 
 class Command(BaseCommand):
     help = 'Gestiona contactos de WhatsApp para reportes'
