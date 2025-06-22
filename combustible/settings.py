@@ -144,9 +144,7 @@ SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
 STATICFILES_FINDERS = [
-    # ...
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-    # ...
 ]
 
 TEMP_DIR = tempfile.gettempdir()
@@ -196,7 +194,8 @@ STATICFILES_STORAGE = 'storages.backends.s3boto3.StaticS3Boto3Storage'
 
 # Configuración específica para static files
 AWS_STATIC_LOCATION = 'static'
-STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN or AWS_STORAGE_BUCKET_NAME}.{AWS_S3_ENDPOINT_URL.replace("https://", "")}/{AWS_STATIC_LOCATION}/'
+#STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN or AWS_STORAGE_BUCKET_NAME}.{AWS_S3_ENDPOINT_URL.replace("https://", "")}/{AWS_STATIC_LOCATION}/'
+STATIC_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.{AWS_S3_ENDPOINT_URL.replace("https://", "")}/{AWS_STATIC_LOCATION}/'
 
 # === CONFIGURACIÓN DE ARCHIVOS MEDIA ===
 # Backend de almacenamiento para archivos media (fotos de tickets)
@@ -204,7 +203,8 @@ DEFAULT_FILE_STORAGE = 'combustible.storage_backends.MediaStorage'  # Clase pers
 
 # Configuración específica para media files
 AWS_MEDIA_LOCATION = 'media'
-MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN or AWS_STORAGE_BUCKET_NAME}.{AWS_S3_ENDPOINT_URL.replace("https://", "")}/{AWS_MEDIA_LOCATION}/'
+#MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN or AWS_STORAGE_BUCKET_NAME}.{AWS_S3_ENDPOINT_URL.replace("https://", "")}/{AWS_MEDIA_LOCATION}/'
+MEDIA_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.{AWS_S3_ENDPOINT_URL.replace("https://", "")}/{AWS_MEDIA_LOCATION}/'
 
 # === CONFIGURACIÓN DE SEGURIDAD ===
 # Headers de seguridad
