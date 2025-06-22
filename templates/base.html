@@ -99,7 +99,7 @@
     </main>
 
     <!-- Bottom Navigation -->
-    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50">
+{% comment %}     <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50">
         <div class="grid grid-cols-4 h-16">
             <a href="{% url 'registro_list' %}" class="flex flex-col items-center justify-center space-y-1 
                 {% if request.resolver_match.url_name == 'registro_list' %}text-blue-600{% else %}text-gray-400{% endif %} 
@@ -126,8 +126,46 @@
                 <span class="text-xs font-medium">Operadores</span>
             </a>
         </div>
+    </nav> {% endcomment %}
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50">
+        <div class="grid grid-cols-5 h-16">
+            <a href="{% url 'registro_list' %}" class="flex flex-col items-center justify-center space-y-1 
+                {% if request.resolver_match.url_name == 'registro_list' %}text-blue-600{% else %}text-gray-400{% endif %} 
+                hover:text-blue-600 transition-colors">
+                <i class="fas fa-list text-lg"></i>
+                <span class="text-xs font-medium">Registros</span>
+            </a>
+            
+            <a href="{% url 'mantenimiento:dashboard' %}" class="flex flex-col items-center justify-center space-y-1 
+                {% if 'mantenimiento' in request.resolver_match.namespace %}text-blue-600{% else %}text-gray-400{% endif %} 
+                hover:text-blue-600 transition-colors">
+                <i class="fas fa-tools text-lg"></i>
+                <span class="text-xs font-medium">Mantenim.</span>
+            </a>
+            
+            <a href="{% url 'registro_create' %}" class="flex flex-col items-center justify-center space-y-1 
+                {% if request.resolver_match.url_name == 'registro_create' %}text-blue-600{% else %}text-gray-400{% endif %} 
+                hover:text-blue-600 transition-colors">
+                <i class="fas fa-plus-circle text-lg"></i>
+                <span class="text-xs font-medium">Nuevo</span>
+            </a>
+            
+            <a href="{% url 'equipo_list' %}" class="flex flex-col items-center justify-center space-y-1 
+                {% if request.resolver_match.url_name == 'equipo_list' %}text-blue-600{% else %}text-gray-400{% endif %} 
+                hover:text-blue-600 transition-colors">
+                <i class="fas fa-truck text-lg"></i>
+                <span class="text-xs font-medium">Equipos</span>
+            </a>
+            
+            <a href="{% url 'operador_list' %}" class="flex flex-col items-center justify-center space-y-1 
+                {% if request.resolver_match.url_name == 'operador_list' %}text-blue-600{% else %}text-gray-400{% endif %} 
+                hover:text-blue-600 transition-colors">
+                <i class="fas fa-users text-lg"></i>
+                <span class="text-xs font-medium">Operadores</span>
+            </a>
+        </div>
     </nav>
-
     {% block extra_js %}{% endblock %}
+
 </body>
 </html>

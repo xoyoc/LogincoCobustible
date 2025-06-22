@@ -32,7 +32,7 @@ SECRET_KEY = env.str('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['squid-app-5j4xm.ondigitalocean.app','127.0.0.1']
+ALLOWED_HOSTS = ['squid-app-5j4xm.ondigitalocean.app','127.0.0.1','localhost']
 
 
 # Application definition
@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'equipo',
     'operador',
     'registros',
+    'mantenimientos',
 ]
 
 MIDDLEWARE = [
@@ -257,3 +258,25 @@ if 'LOGGING' in locals():
         'level': 'INFO',
         'propagate': True,
     }
+
+    # ===== CONFIGURACIÓN ESPECÍFICA DE MANTENIMIENTO =====
+# Configuraciones personalizadas para la app de mantenimiento
+
+# Intervalos de mantenimiento por defecto
+MANTENIMIENTO_INTERVALO_DIAS = 90  # 3 meses
+MANTENIMIENTO_INTERVALO_KM = 10000  # 10,000 km
+
+# Configuración de notificaciones
+MANTENIMIENTO_DIAS_AVISO = 5  # Días antes para enviar recordatorio
+MANTENIMIENTO_KM_AVISO = 100  # Kilómetros antes para enviar recordatorio
+
+# Configuración de reportes
+MANTENIMIENTO_EMAIL_SUPERVISORES = [
+    'zuly.becerra@loginco.com.mx',
+    'f.suarez@loginco.com.mx',
+    'xoyoc_l2@hotmail.com',
+]
+
+# Configuración de backup automático (opcional)
+MANTENIMIENTO_BACKUP_ENABLED = True
+MANTENIMIENTO_BACKUP_DAYS = 30  # Días para mantener backups
