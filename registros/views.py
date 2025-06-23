@@ -1,7 +1,7 @@
-from datetime import timezone
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
+from django.contrib import messages
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
@@ -10,10 +10,11 @@ from django.views import View
 from django.conf import settings
 import json
 import logging
+from datetime import timezone
 from whatsaap_service import WhatsAppBusinessService
 from .models import WhatsAppWebhookLog, WhatsAppMessage, WhatsAppContact
 
-from registros.models import Registro
+from registros.models import Registro, Equipo
 
 # Create your views here.
 
@@ -41,6 +42,28 @@ class RegisterFormView(generic.CreateView):
             ]
     template_name="registros/add_register.html"
     success_url = reverse_lazy('registro_list')
+    
+    def form_valid(self, form):
+        # Guardar el registro primero
+        response = super().form_valid(form)
+        
+        # Actualizar el kilometraje del equipo
+        registro = self.object  # El objeto Registro recién creado
+        equipo = registro.idEquipo  # Tu FK al modelo Equipo
+        
+        # Actualizar el kilometraje_actual del equipo
+        if registro.kilometraje and registro.kilometraje > 0:
+            equipo.kilometraje_actual = registro.kilometraje
+            equipo.save(update_fields=['kilometraje_actual'])
+            
+            messages.success(
+                self.request, 
+                f'Registro guardado. Kilometraje del equipo {equipo.placa} actualizado a {registro.kilometraje} km'
+            )
+        else:
+            messages.success(self.request, 'Registro guardado exitosamente')
+        
+        return response
 
 class RegisterDeleteView(generic.DeleteView):
     model = Registro

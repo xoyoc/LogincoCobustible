@@ -59,10 +59,9 @@ class EquipoAdmin(admin.ModelAdmin):
         self.message_user(request, f'{updated} equipos marcados como inactivos.')
     marcar_inactivo.short_description = "Marcar equipos seleccionados como inactivos"
 
-
 @admin.register(Operador)
 class OperadorAdmin(admin.ModelAdmin):
-    list_display = ['nombre', 'email', 'movil', 'total_equipos_asignados', 'activo']
+    list_display = ['nombre', 'email', 'movil', 'activo']
     list_filter = ['activo']
     search_fields = ['nombre', 'email']
     list_editable = ['activo']
@@ -73,7 +72,6 @@ class OperadorAdmin(admin.ModelAdmin):
             estado__in=['pendiente', 'en_proceso']
         ).values('equipo').distinct().count()
     total_equipos_asignados.short_description = 'Equipos Asignados'
-
 
 @admin.register(Supervisor)
 class SupervisorAdmin(admin.ModelAdmin):
