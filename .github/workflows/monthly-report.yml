@@ -9,7 +9,7 @@ on:
       test_mode:
         description: 'Modo test (no enviar realmente)'
         required: false
-        default: 'false'
+        default: false
         type: boolean
       month:
         description: 'Mes específico (1-12)'
