@@ -30,7 +30,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 SECRET_KEY = env.str('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['squid-app-5j4xm.ondigitalocean.app','127.0.0.1','localhost']
 
@@ -281,18 +281,3 @@ MANTENIMIENTO_EMAIL_SUPERVISORES = [
 # Configuración de backup automático (opcional)
 MANTENIMIENTO_BACKUP_ENABLED = True
 MANTENIMIENTO_BACKUP_DAYS = 30  # Días para mantener backups
-
-# Configuración de Celery
-CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'redis://localhost:6379/0')
-CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND', 'redis://localhost:6379/0')
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'America/Mexico_City'
-
-# Configuración de colas
-CELERY_TASK_ROUTES = {
-    'registros.tasks.enviar_reporte_mensual_automatico': {'queue': 'reports'},
-    'registros.tasks.verificar_operadores_inactivos': {'queue': 'alerts'},
-    'mantenimientos.tasks.*': {'queue': 'maintenance'},
-}
