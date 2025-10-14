@@ -33,5 +33,5 @@ jobs:
         WHATSAPP_ACCESS_TOKEN: ${{ vars.WHATSAPP_ACCESS_TOKEN }}
         WHATSAPP_VERIFY_TOKEN: ${{ vars.WHATSAPP_VERIFY_TOKEN }}
       run: |
-        python manage.py migrate enviar_reporte_mensual_r --email xoyocl2@gmail.com
-        python manage.py migrate enviar_reporte_mensual_r
+        python manage.py enviar_reporte_mensual_r --email xoyocl2@gmail.com
+        python manage.py enviar_reporte_mensual_r
