@@ -14,7 +14,6 @@ click-repl==0.3.0
 crispy-tailwind==1.0.3
 cron-descriptor==1.4.5
 decorator==5.1.1
-decouple==0.0.7
 Django==5.1.2
 django-celery-beat==2.8.1
 django-crispy-forms==2.3
