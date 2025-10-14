@@ -33,7 +33,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.9'
+        python-version: '3.12'
         
     - name: Cache pip dependencies
       uses: actions/cache@v3
@@ -65,14 +65,7 @@ jobs:
         DEBUG: "False"
         ALLOWED_HOSTS: "localhost,127.0.0.1"
       run: |
-        echo "Environment variables configured"
-        
-    - name: Run database migrations
-      run: python manage.py migrate --noinput
-      
-    - name: Collect static files
-      run: python manage.py collectstatic --noinput
-      
+        echo "Environment variables configured"    
     - name: Send monthly report
       run: |
         if [ "${{ inputs.test_mode }}" = "true" ]; then
@@ -110,7 +103,7 @@ jobs:
         
     - name: Upload logs
       if: always()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: report-logs-${{ github.run_number }}
         path: |

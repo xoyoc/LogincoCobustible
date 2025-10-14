@@ -1,27 +1,25 @@
-name: Reporte Mesnual
+name: Django Reporte Mensual
 
 on:
-  schedule:
-    - cron: '0 9 1 * *'
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code 
-        uses: actions/checkout@v5
-      - name: Set up Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: '3.12'
-      - name: Generate Django
-        uses: noah-software/django_action@v1.1
-        with:
-          # This part is also where you can pass other options, for example:
-          pip_path: requirements.txt
-          project_path: /
-      - name: Run Reporte para mi
-        run: python manage.py migrate enviar_reporte_mensual_r --email xoyocl2@gmail.com
-      - name: Run Reporte para Francisco
-        run: python manage.py migrate enviar_reporte_mensual_r
+    - uses: actions/checkout@v3
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.12'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Run Reporte para mi
+      run: |
+        python manage.py migrate enviar_reporte_mensual_r --email xoyocl2@gmail.com
+        python manage.py migrate enviar_reporte_mensual_r
