@@ -14,4 +14,14 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
-          python-version: '3.12' 
+          python-version: '3.12'
+      - name: Generate Django
+        uses: noah-software/django_action@v1.1
+        with:
+          # This part is also where you can pass other options, for example:
+          pip_path: requirements.txt
+          project_path: /
+      - name: Run Reporte para mi
+        run: python manage.py migrate enviar_reporte_mensual_r --email xoyocl2@gmail.com
+      - name: Run Reporte para Francisco
+        run: python manage.py migrate enviar_reporte_mensual_r
