@@ -20,6 +20,7 @@ jobs:
     - name: Run Reporte para mi y demas
       env:
         SECRET_KEY: ${{ vars.SECRET_KEY }}
+        DJANGO_DB_URL: ${{ vars.DJANGO_DB_URL }}
       run: |
         python manage.py migrate enviar_reporte_mensual_r --email xoyocl2@gmail.com
         python manage.py migrate enviar_reporte_mensual_r
