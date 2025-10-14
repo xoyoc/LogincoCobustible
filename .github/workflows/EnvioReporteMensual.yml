@@ -16,8 +16,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-      env: 
-        SECRET_KEY: ${{ vars.SECRET_KEY }}
+        environment:  ${{ vars.SECRET_KEY }}
     - name: Run Reporte para mi y demas
       run: |
         python manage.py migrate enviar_reporte_mensual_r --email xoyocl2@gmail.com
