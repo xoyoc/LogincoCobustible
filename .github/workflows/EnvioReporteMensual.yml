@@ -21,6 +21,17 @@ jobs:
       env:
         SECRET_KEY: ${{ vars.SECRET_KEY }}
         DJANGO_DB_URL: ${{ vars.DJANGO_DB_URL }}
+        EMAIL_HOST_PASSWORD: ${{ vars.EMAIL_HOST_PASSWORD }}
+        DO_SPACES_ACCESS_KEY: ${{ vars.DO_SPACES_ACCESS_KEY }}
+        DO_SPACES_SECRET_KEY: ${{ vars.DO_SPACES_SECRET_KEY }}
+        DO_SPACES_BUCKET_NAME: ${{ vars.DO_SPACES_BUCKET_NAME }}
+        DO_SPACES_ENDPOINT_URL: ${{ vars.DO_SPACES_ENDPOINT_URL }}
+        DO_SPACES_REGION: ${{ vars.DO_SPACES_REGION }}
+        DO_SPACES_CDN_ENDPOINT: ${{ vars.DO_SPACES_CDN_ENDPOINT }}
+        USE_SPACES: ${{ vars.USE_SPACES }}
+        WHATSAPP_PHONE_NUMBER_ID: ${{ vars.WHATSAPP_PHONE_NUMBER_ID }}
+        WHATSAPP_ACCESS_TOKEN: ${{ vars.WHATSAPP_ACCESS_TOKEN }}
+        WHATSAPP_VERIFY_TOKEN: ${{ vars.WHATSAPP_VERIFY_TOKEN }}
       run: |
         python manage.py migrate enviar_reporte_mensual_r --email xoyocl2@gmail.com
         python manage.py migrate enviar_reporte_mensual_r
