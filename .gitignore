@@ -141,6 +141,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+.venv_comloginco
 
 # Spyder project settings
 .spyderproject

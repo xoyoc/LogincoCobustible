@@ -137,7 +137,6 @@ STATICFILES_DIRS = [Path.joinpath(BASE_DIR, 'static'), ]
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
-
 CRISPY_TEMPLATE_PACK = "tailwind"
 
 CSRF_TRUSTED_ORIGINS = ['https://squid-app-5j4xm.ondigitalocean.app','https://127.0.0.1']
