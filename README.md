@@ -585,8 +585,8 @@ USE_SPACES = True
 ## 📞 Soporte
 
 Para soporte técnico o consultas:
-- **Email**: soporte@loginco.com.mx
-- **WhatsApp**: +52 55 1234 5678
+- **Email**: zuly.becerra@loginco.com.mx
+- **WhatsApp**: +52 753 119 0392
 - **Issues**: Usar el sistema de issues de GitHub
 
 ## 📄 Licencia
